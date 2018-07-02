@@ -5,6 +5,7 @@ FlashCards project - udacity react course
 ## Description
 
 In this application you can create decks and cards to start a quiz.
+</br>
 This app was developed and tested using an Android phone.
 
 ## Create React Native App
