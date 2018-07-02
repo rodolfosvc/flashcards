@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { StyleSheet, TextInput, Text, TouchableOpacity, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, TextInput, Text, TouchableOpacity, KeyboardAvoidingView, Alert } from 'react-native'
 import { SCREENS_NAMES } from '../../utils/consts'
 import { purple, white } from '../../utils/colors'
+import { isStrEmpty } from '../../utils/helpers'
 import { createCard } from '../../actions'
 import { connect } from 'react-redux'
 
@@ -47,8 +48,19 @@ class AddCard extends Component {
     const { navigation } = this.props
     const { deck } = navigation.state.params
     const newQuestion = this.state
-    this.props.dispatch(createCard(deck, newQuestion))
+    if(!newQuestion || isStrEmpty(newQuestion.question) || isStrEmpty(newQuestion.answer)){
+      Alert.alert(
+        'Required fields',
+        'All fields are required',
+        [
+          {text: 'OK'}
+        ],
+        { cancelable: false }
+      )
+    }else{
+      this.props.dispatch(createCard(deck, newQuestion))
       .then(() => navigation.goBack())
+    }
   }
 
   render() {

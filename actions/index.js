@@ -1,5 +1,4 @@
 import * as ServerAPI from '../utils/api'
-import uuidv4 from 'uuid/v4'
 
 export const LOAD_DECKS = 'LOAD_DECKS'
 export const ADD_UPDATE_DECK = 'ADD_DECK'
@@ -22,10 +21,10 @@ export const fetchDecks = () => dispatch => (
     })
 )
 
-export const createDeck = (title) => dispatch => {
+export const createDeck = (title, id) => dispatch => {
   const newDeck = {
     title,
-    id: uuidv4(), //cirando id para o deck
+    id,
     questions: []
   }
   return ServerAPI

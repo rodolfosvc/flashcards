@@ -60,7 +60,7 @@ const firstQuestionIndex = 0
 
 class Quiz extends Component {
 
-  state = {
+  getInitialState = () => ({
     question: this.props.navigation.state.params.questions[firstQuestionIndex].question, //questão inicial
     answer: this.props.navigation.state.params.questions[firstQuestionIndex].answer, //resposta inicial
     nextQuestionIndex: firstQuestionIndex + 1, //próximo index do array de questões
@@ -68,7 +68,9 @@ class Quiz extends Component {
     showAnswer: false,
     corretCount: 0,
     finished: false
-  }
+  })
+
+  state = this.getInitialState()
 
   goToNextQuestion = (corret) => {
     const { questions } = this.props.navigation.state.params
@@ -97,6 +99,10 @@ class Quiz extends Component {
   getPercentage = (number) => {
     const result = number * 100
     return result.toFixed(2)
+  }
+
+  restartQuiz = () => {
+    this.setState(this.getInitialState())
   }
 
   render() {
@@ -136,7 +142,8 @@ class Quiz extends Component {
             'Quiz finished',
             `Your score was: ${this.getPercentage(corretCount/totalQuestions)} %`,
             [
-              {text: 'OK', onPress: () => navigation.navigate(SCREENS_NAMES.DECK_LIST)},
+              {text: 'Restart Quiz', onPress: () => this.restartQuiz()},
+              {text: 'Bak to Deck', onPress: () => navigation.goBack()}
             ],
             { cancelable: false }
           )

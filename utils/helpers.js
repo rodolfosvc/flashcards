@@ -2,6 +2,10 @@ import { AsyncStorage } from 'react-native'
 import { Notifications, Permissions } from 'expo'
 import { NOTIFICATION_KEY } from './consts'
 
+export function isStrEmpty(str){
+  return !str || str.length === 0 || /^[\s]*$/.test(str) //expressão regular para testar string vazia
+}
+
 export function clearLocalNotification () {
   return AsyncStorage.removeItem(NOTIFICATION_KEY)
     .then(Notifications.cancelAllScheduledNotificationsAsync)

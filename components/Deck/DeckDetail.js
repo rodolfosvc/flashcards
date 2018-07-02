@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import { SCREENS_NAMES } from '../../utils/consts'
 import { purple, white } from '../../utils/colors'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -38,9 +39,7 @@ const styles = StyleSheet.create({
   },
 })
 
-
-
-const DeckDetail = ( {deck, navigation} ) => {
+const DeckDetail = ({deck, navigation}) => {
 
   const goToQuiz = () => {
     if(deck && deck.questions && deck.questions.length > 0){

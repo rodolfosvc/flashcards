@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
 import { View, Text, TextInput,
-  TouchableOpacity, StyleSheet, KeyboardAvoidingView } from 'react-native'
+  TouchableOpacity, StyleSheet, KeyboardAvoidingView, Alert } from 'react-native'
 import { SCREENS_NAMES } from '../../utils/consts'
 import { purple, white } from '../../utils/colors'
 import { createDeck } from '../../actions'
 import { connect } from 'react-redux'
+import { isStrEmpty } from '../../utils/helpers'
+import uuidv4 from 'uuid/v4'
 
 const styles = StyleSheet.create({
   container: {
@@ -46,9 +48,20 @@ class AddDeck extends Component {
   saveDeck = () => {
     const { navigation } = this.props
     const { title } = this.state
-    debugger
-    this.props.dispatch(createDeck(title))
-      .then(() => navigation.navigate(SCREENS_NAMES.DECK_LIST))
+    if(isStrEmpty(title)){
+      Alert.alert(
+        'Required fields',
+        'All fields are required',
+        [
+          {text: 'OK'}
+        ],
+        { cancelable: false }
+      )
+    }else{
+      const id = uuidv4() //criando id do deck
+      this.props.dispatch(createDeck(title, id))
+      .then(() => { navigation.navigate(SCREENS_NAMES.DECK_DETAIL, { deckId: id })})
+    }
   }
 
   changeText = (title) => {
